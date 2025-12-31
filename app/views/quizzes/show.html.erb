@@ -1,0 +1,31 @@
+<% content_for(:title) { "#{@quiz.title} - Music Theory" } %>
+
+<div class="quiz-detail">
+  <header class="quiz-header">
+    <div class="quiz-title-row">
+      <h1><%= @quiz.title %></h1>
+      <%= difficulty_badge(@quiz.difficulty) %>
+    </div>
+    <p class="quiz-description"><%= @quiz.description %></p>
+    <div class="quiz-meta">
+      <span class="category-tag"><%= @quiz.category %></span>
+      <span class="question-count"><%= @quiz.question_count %> questions</span>
+    </div>
+  </header>
+
+  <section class="quiz-preview">
+    <h2>Topics Covered</h2>
+    <div class="topic-tags">
+      <% @quiz.questions.pluck(:topic).uniq.each do |topic| %>
+        <span class="topic-tag"><%= topic.titleize %></span>
+      <% end %>
+    </div>
+  </section>
+
+  <section class="quiz-actions">
+    <p>Ready to test your knowledge?</p>
+    <%= button_to "Start Quiz", quiz_quiz_attempts_path(@quiz), method: :post, class: "btn btn-primary btn-lg" %>
+  </section>
+
+  <%= link_to "← Back to Quizzes", quizzes_path, class: "back-link" %>
+</div>

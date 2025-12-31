@@ -1,0 +1,41 @@
+<% content_for(:title) { "Quiz History - Music Theory" } %>
+
+<div class="history-page">
+  <header class="page-header">
+    <h1>My Quiz History</h1>
+    <p>Review your past quiz attempts</p>
+  </header>
+
+  <% if @quiz_attempts.any? %>
+    <div class="history-list">
+      <% @quiz_attempts.each do |attempt| %>
+        <div class="history-card">
+          <div class="history-info">
+            <h3><%= attempt.quiz.title %></h3>
+            <div class="history-meta">
+              <%= difficulty_badge(attempt.quiz.difficulty) %>
+              <span class="date"><%= attempt.completed_at.strftime("%B %d, %Y at %I:%M %p") %></span>
+            </div>
+          </div>
+          <div class="history-score">
+            <span class="score <%= score_color(attempt.score_percentage) %>">
+              <%= attempt.score %>/<%= attempt.total_questions %>
+            </span>
+            <span class="percentage <%= score_color(attempt.score_percentage) %>">
+              <%= attempt.score_percentage %>%
+            </span>
+          </div>
+          <div class="history-actions">
+            <%= link_to "Review", quiz_quiz_attempt_path(attempt.quiz, attempt), class: "btn btn-outline" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="empty-state">
+      <h3>No quizzes taken yet</h3>
+      <p>Start a quiz to see your history here.</p>
+      <%= link_to "Browse Quizzes", quizzes_path, class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

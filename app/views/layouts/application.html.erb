@@ -24,6 +24,32 @@
   </head>
 
   <body>
-    <%= yield %>
+    <nav class="navbar">
+      <div class="container">
+        <%= link_to "🎵 Music Theory", root_path, class: "logo" %>
+        <div class="nav-links">
+          <% if authenticated? %>
+            <%= link_to "Dashboard", dashboard_path %>
+            <%= link_to "Quizzes", quizzes_path %>
+            <%= link_to "My History", quiz_attempts_path %>
+            <%= button_to "Sign Out", session_path, method: :delete, class: "btn btn-outline" %>
+          <% else %>
+            <%= link_to "Sign In", new_session_path, class: "btn btn-outline" %>
+            <%= link_to "Sign Up", new_registration_path, class: "btn btn-primary" %>
+          <% end %>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container">
+      <% if notice.present? %>
+        <div class="alert alert-success"><%= notice %></div>
+      <% end %>
+      <% if alert.present? %>
+        <div class="alert alert-error"><%= alert %></div>
+      <% end %>
+
+      <%= yield %>
+    </main>
   </body>
 </html>

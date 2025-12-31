@@ -1,0 +1,81 @@
+<% content_for(:title) { "#{@quiz_attempt.quiz.title} - Music Theory" } %>
+
+<div class="quiz-attempt">
+  <% if @quiz_attempt.completed? %>
+    <%# REVIEW MODE - Show results %>
+    <header class="attempt-header">
+      <h1><%= @quiz_attempt.quiz.title %> - Results</h1>
+      <div class="score-display <%= score_color(@quiz_attempt.score_percentage) %>">
+        <span class="score-big"><%= @quiz_attempt.score_percentage %>%</span>
+        <span class="score-detail"><%= @quiz_attempt.score %>/<%= @quiz_attempt.total_questions %> correct</span>
+      </div>
+    </header>
+
+    <div class="questions-review">
+      <% @questions.each_with_index do |question, index| %>
+        <% user_answer = @user_answers[question.id] %>
+        <div class="question-card <%= user_answer&.correct? ? 'correct' : 'incorrect' %>">
+          <div class="question-header">
+            <span class="question-number">Question <%= index + 1 %></span>
+            <span class="topic-tag"><%= question.topic.titleize %></span>
+            <span class="result-badge"><%= user_answer&.correct? ? '✓ Correct' : '✗ Incorrect' %></span>
+          </div>
+          <p class="question-text"><%= question.content %></p>
+          
+          <div class="answers-review">
+            <% question.answers.each do |answer| %>
+              <% is_selected = user_answer&.answer_id == answer.id %>
+              <% is_correct = answer.correct? %>
+              <div class="answer-option <%= 'selected' if is_selected %> <%= 'correct-answer' if is_correct %> <%= 'wrong-selected' if is_selected && !is_correct %>">
+                <span class="answer-indicator">
+                  <% if is_correct %>✓<% elsif is_selected %>✗<% end %>
+                </span>
+                <span class="answer-text"><%= answer.content %></span>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="attempt-actions">
+      <%= button_to "Try Again", quiz_quiz_attempts_path(@quiz_attempt.quiz), method: :post, class: "btn btn-primary" %>
+      <%= link_to "Back to Quizzes", quizzes_path, class: "btn btn-outline" %>
+    </div>
+
+  <% else %>
+    <%# QUIZ MODE - Taking the quiz %>
+    <header class="attempt-header">
+      <h1><%= @quiz_attempt.quiz.title %></h1>
+      <p><%= @quiz_attempt.total_questions %> questions</p>
+    </header>
+
+    <%= form_with url: submit_quiz_quiz_attempt_path(@quiz_attempt.quiz, @quiz_attempt), method: :post, class: "quiz-form" do |form| %>
+      <div class="questions-list">
+        <% @questions.each_with_index do |question, index| %>
+          <div class="question-card">
+            <div class="question-header">
+              <span class="question-number">Question <%= index + 1 %> of <%= @questions.count %></span>
+              <span class="topic-tag"><%= question.topic.titleize %></span>
+              <%= difficulty_badge(question.difficulty) %>
+            </div>
+            <p class="question-text"><%= question.content %></p>
+            
+            <div class="answer-options">
+              <% question.answers.shuffle.each do |answer| %>
+                <label class="answer-option">
+                  <%= radio_button_tag "answers[#{question.id}]", answer.id, false, class: "answer-radio" %>
+                  <span class="answer-text"><%= answer.content %></span>
+                </label>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="quiz-submit">
+        <%= form.submit "Submit Quiz", class: "btn btn-primary btn-lg" %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

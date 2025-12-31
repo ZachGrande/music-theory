@@ -1,0 +1,71 @@
+<% content_for(:title) { "Dashboard - Music Theory" } %>
+
+<div class="dashboard">
+  <header class="dashboard-header">
+    <h1>Welcome back!</h1>
+    <p class="subtitle">Ready to test your music theory knowledge?</p>
+  </header>
+
+  <section class="stats-grid">
+    <div class="stat-card">
+      <span class="stat-value"><%= @stats[:total_quizzes] %></span>
+      <span class="stat-label">Quizzes Completed</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-value"><%= @stats[:average_score] %>%</span>
+      <span class="stat-label">Average Score</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-value">🔥 <%= @stats[:current_streak] %></span>
+      <span class="stat-label">Current Streak</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-value">🏆 <%= @stats[:longest_streak] %></span>
+      <span class="stat-label">Longest Streak</span>
+    </div>
+  </section>
+
+  <section class="dashboard-section">
+    <h2>Available Quizzes</h2>
+    <% if @quizzes.any? %>
+      <div class="quiz-grid">
+        <% @quizzes.each do |quiz| %>
+          <div class="quiz-card">
+            <div class="quiz-card-header">
+              <h3><%= quiz.title %></h3>
+              <%= difficulty_badge(quiz.difficulty) %>
+            </div>
+            <p><%= quiz.description %></p>
+            <div class="quiz-card-footer">
+              <span class="question-count"><%= quiz.question_count %> questions</span>
+              <%= link_to "Start Quiz", quiz_path(quiz), class: "btn btn-primary" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="empty-state">No quizzes available yet. Check back soon!</p>
+    <% end %>
+  </section>
+
+  <% if @recent_attempts.any? %>
+    <section class="dashboard-section">
+      <h2>Recent Activity</h2>
+      <div class="recent-attempts">
+        <% @recent_attempts.each do |attempt| %>
+          <div class="attempt-row">
+            <div class="attempt-info">
+              <strong><%= attempt.quiz.title %></strong>
+              <span class="attempt-date"><%= attempt.completed_at.strftime("%b %d, %Y") %></span>
+            </div>
+            <div class="attempt-score <%= score_color(attempt.score_percentage) %>">
+              <%= attempt.score %>/<%= attempt.total_questions %> (<%= attempt.score_percentage %>%)
+            </div>
+            <%= link_to "Review", quiz_quiz_attempt_path(attempt.quiz, attempt), class: "btn btn-outline btn-sm" %>
+          </div>
+        <% end %>
+      </div>
+      <%= link_to "View All History →", quiz_attempts_path, class: "link" %>
+    </section>
+  <% end %>
+</div>

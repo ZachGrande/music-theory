@@ -1,0 +1,42 @@
+<% content_for(:title) { "Quizzes - Music Theory" } %>
+
+<div class="quizzes-page">
+  <header class="page-header">
+    <h1>Music Theory Quizzes</h1>
+    <p>Choose a quiz to test your knowledge</p>
+  </header>
+
+  <div class="filters">
+    <%= link_to "All", quizzes_path, class: "filter-btn #{params[:difficulty].blank? ? 'active' : ''}" %>
+    <%= link_to "Easy", quizzes_path(difficulty: "easy"), class: "filter-btn #{params[:difficulty] == 'easy' ? 'active' : ''}" %>
+    <%= link_to "Medium", quizzes_path(difficulty: "medium"), class: "filter-btn #{params[:difficulty] == 'medium' ? 'active' : ''}" %>
+    <%= link_to "Hard", quizzes_path(difficulty: "hard"), class: "filter-btn #{params[:difficulty] == 'hard' ? 'active' : ''}" %>
+  </div>
+
+  <% if @quizzes.any? %>
+    <div class="quiz-grid">
+      <% @quizzes.each do |quiz| %>
+        <div class="quiz-card">
+          <div class="quiz-card-header">
+            <h3><%= quiz.title %></h3>
+            <%= difficulty_badge(quiz.difficulty) %>
+          </div>
+          <p><%= quiz.description %></p>
+          <div class="quiz-meta">
+            <span class="category-tag"><%= quiz.category %></span>
+            <span class="question-count"><%= quiz.question_count %> questions</span>
+          </div>
+          <div class="quiz-card-footer">
+            <%= link_to "View Details", quiz_path(quiz), class: "btn btn-outline" %>
+            <%= button_to "Start Quiz", quiz_quiz_attempts_path(quiz), method: :post, class: "btn btn-primary" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="empty-state">
+      <h3>No quizzes found</h3>
+      <p>Try changing your filters or check back later for new content.</p>
+    </div>
+  <% end %>
+</div>
