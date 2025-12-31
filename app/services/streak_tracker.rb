@@ -11,7 +11,7 @@ class StreakTracker
       start_new_streak(today)
     elsif @user.last_quiz_date == today
       # Already took a quiz today, no change
-      return
+      nil
     elsif @user.last_quiz_date == today - 1.day
       # Consecutive day - increment streak
       increment_streak(today)
