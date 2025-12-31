@@ -1,42 +1,42 @@
 <% content_for(:title) { "Quizzes - Music Theory" } %>
 
-<div class="quizzes-page">
-  <header class="page-header">
-    <h1>Music Theory Quizzes</h1>
-    <p>Choose a quiz to test your knowledge</p>
+<div>
+  <header class="mb-8">
+    <h1 class="m-0 mb-2 text-3xl font-bold">Music Theory Quizzes</h1>
+    <p class="text-gray-500 m-0">Choose a quiz to test your knowledge</p>
   </header>
 
-  <div class="filters">
-    <%= link_to "All", quizzes_path, class: "filter-btn #{params[:difficulty].blank? ? 'active' : ''}" %>
-    <%= link_to "Easy", quizzes_path(difficulty: "easy"), class: "filter-btn #{params[:difficulty] == 'easy' ? 'active' : ''}" %>
-    <%= link_to "Medium", quizzes_path(difficulty: "medium"), class: "filter-btn #{params[:difficulty] == 'medium' ? 'active' : ''}" %>
-    <%= link_to "Hard", quizzes_path(difficulty: "hard"), class: "filter-btn #{params[:difficulty] == 'hard' ? 'active' : ''}" %>
+  <div class="flex gap-2 mb-6">
+    <%= link_to "All", quizzes_path, class: "px-4 py-2 rounded-lg text-sm font-medium border transition-all no-underline #{params[:difficulty].blank? ? 'bg-indigo-500 text-white border-indigo-500' : 'bg-white text-gray-700 border-gray-200 hover:bg-indigo-500 hover:text-white hover:border-indigo-500'}" %>
+    <%= link_to "Easy", quizzes_path(difficulty: "easy"), class: "px-4 py-2 rounded-lg text-sm font-medium border transition-all no-underline #{params[:difficulty] == 'easy' ? 'bg-indigo-500 text-white border-indigo-500' : 'bg-white text-gray-700 border-gray-200 hover:bg-indigo-500 hover:text-white hover:border-indigo-500'}" %>
+    <%= link_to "Medium", quizzes_path(difficulty: "medium"), class: "px-4 py-2 rounded-lg text-sm font-medium border transition-all no-underline #{params[:difficulty] == 'medium' ? 'bg-indigo-500 text-white border-indigo-500' : 'bg-white text-gray-700 border-gray-200 hover:bg-indigo-500 hover:text-white hover:border-indigo-500'}" %>
+    <%= link_to "Hard", quizzes_path(difficulty: "hard"), class: "px-4 py-2 rounded-lg text-sm font-medium border transition-all no-underline #{params[:difficulty] == 'hard' ? 'bg-indigo-500 text-white border-indigo-500' : 'bg-white text-gray-700 border-gray-200 hover:bg-indigo-500 hover:text-white hover:border-indigo-500'}" %>
   </div>
 
   <% if @quizzes.any? %>
-    <div class="quiz-grid">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       <% @quizzes.each do |quiz| %>
-        <div class="quiz-card">
-          <div class="quiz-card-header">
-            <h3><%= quiz.title %></h3>
+        <div class="bg-white rounded-xl p-6 shadow">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="m-0 text-lg font-semibold"><%= quiz.title %></h3>
             <%= difficulty_badge(quiz.difficulty) %>
           </div>
-          <p><%= quiz.description %></p>
-          <div class="quiz-meta">
-            <span class="category-tag"><%= quiz.category %></span>
-            <span class="question-count"><%= quiz.question_count %> questions</span>
+          <p class="text-gray-500 text-sm m-0 mb-4"><%= quiz.description %></p>
+          <div class="flex gap-3 mb-4">
+            <span class="bg-gray-100 text-gray-700 px-2.5 py-1 rounded-lg text-xs font-medium"><%= quiz.category %></span>
+            <span class="text-gray-500 text-sm"><%= quiz.question_count %> questions</span>
           </div>
-          <div class="quiz-card-footer">
-            <%= link_to "View Details", quiz_path(quiz), class: "btn btn-outline" %>
-            <%= button_to "Start Quiz", quiz_quiz_attempts_path(quiz), method: :post, class: "btn btn-primary" %>
+          <div class="flex justify-between items-center pt-4 border-t border-gray-100">
+            <%= link_to "View Details", quiz_path(quiz), class: "inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium rounded-lg border border-gray-300 text-gray-700 bg-transparent hover:bg-gray-100 transition-all no-underline" %>
+            <%= button_to "Start Quiz", quiz_quiz_attempts_path(quiz), method: :post, class: "inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium rounded-lg bg-indigo-500 text-white hover:bg-indigo-600 transition-all cursor-pointer border-none" %>
           </div>
         </div>
       <% end %>
     </div>
   <% else %>
-    <div class="empty-state">
-      <h3>No quizzes found</h3>
-      <p>Try changing your filters or check back later for new content.</p>
+    <div class="text-center p-12 bg-white rounded-xl">
+      <h3 class="m-0 mb-2 font-semibold">No quizzes found</h3>
+      <p class="text-gray-500 m-0 mb-6">Try changing your filters or check back later for new content.</p>
     </div>
   <% end %>
 </div>

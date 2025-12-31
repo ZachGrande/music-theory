@@ -5,18 +5,18 @@ module ApplicationHelper
 
   def difficulty_badge(difficulty)
     colors = {
-      "easy" => "badge-success",
-      "medium" => "badge-warning",
-      "hard" => "badge-error"
+      "easy" => "bg-green-100 text-green-800",
+      "medium" => "bg-amber-100 text-amber-800",
+      "hard" => "bg-red-100 text-red-800"
     }
-    content_tag(:span, difficulty.capitalize, class: "badge #{colors[difficulty]}")
+    content_tag(:span, difficulty.capitalize, class: "inline-block px-2.5 py-1 text-xs font-semibold rounded-full uppercase #{colors[difficulty]}")
   end
 
   def score_color(percentage)
     case percentage
-    when 80..100 then "text-success"
-    when 60..79 then "text-warning"
-    else "text-error"
+    when 80..100 then "text-green-500"
+    when 60..79 then "text-amber-500"
+    else "text-red-500"
     end
   end
 end

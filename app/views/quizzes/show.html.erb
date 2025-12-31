@@ -1,31 +1,31 @@
 <% content_for(:title) { "#{@quiz.title} - Music Theory" } %>
 
-<div class="quiz-detail">
-  <header class="quiz-header">
-    <div class="quiz-title-row">
-      <h1><%= @quiz.title %></h1>
+<div class="max-w-2xl">
+  <header class="bg-white rounded-xl p-8 mb-6 shadow">
+    <div class="flex justify-between items-center mb-4">
+      <h1 class="m-0 text-2xl font-bold"><%= @quiz.title %></h1>
       <%= difficulty_badge(@quiz.difficulty) %>
     </div>
-    <p class="quiz-description"><%= @quiz.description %></p>
-    <div class="quiz-meta">
-      <span class="category-tag"><%= @quiz.category %></span>
-      <span class="question-count"><%= @quiz.question_count %> questions</span>
+    <p class="text-gray-500 m-0 mb-4"><%= @quiz.description %></p>
+    <div class="flex gap-3">
+      <span class="bg-gray-100 text-gray-700 px-2.5 py-1 rounded-lg text-xs font-medium"><%= @quiz.category %></span>
+      <span class="text-gray-500 text-sm"><%= @quiz.question_count %> questions</span>
     </div>
   </header>
 
-  <section class="quiz-preview">
-    <h2>Topics Covered</h2>
-    <div class="topic-tags">
+  <section class="bg-white rounded-xl p-6 mb-6 shadow">
+    <h2 class="m-0 mb-4 text-base font-semibold">Topics Covered</h2>
+    <div class="flex flex-wrap gap-2">
       <% @quiz.questions.pluck(:topic).uniq.each do |topic| %>
-        <span class="topic-tag"><%= topic.titleize %></span>
+        <span class="bg-gray-100 text-gray-700 px-2.5 py-1 rounded-lg text-xs font-medium"><%= topic.titleize %></span>
       <% end %>
     </div>
   </section>
 
-  <section class="quiz-actions">
-    <p>Ready to test your knowledge?</p>
-    <%= button_to "Start Quiz", quiz_quiz_attempts_path(@quiz), method: :post, class: "btn btn-primary btn-lg" %>
+  <section class="bg-white rounded-xl p-6 text-center shadow">
+    <p class="m-0 mb-4 text-gray-500">Ready to test your knowledge?</p>
+    <%= button_to "Start Quiz", quiz_quiz_attempts_path(@quiz), method: :post, class: "inline-flex items-center justify-center px-7 py-3.5 text-base font-medium rounded-lg bg-indigo-500 text-white hover:bg-indigo-600 transition-all cursor-pointer border-none" %>
   </section>
 
-  <%= link_to "← Back to Quizzes", quizzes_path, class: "back-link" %>
+  <%= link_to "← Back to Quizzes", quizzes_path, class: "inline-block mt-6 text-gray-500 no-underline hover:text-indigo-500" %>
 </div>

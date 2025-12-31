@@ -1,36 +1,36 @@
 <% content_for(:title) { "#{@quiz_attempt.quiz.title} - Music Theory" } %>
 
-<div class="quiz-attempt">
+<div class="max-w-3xl mx-auto">
   <% if @quiz_attempt.completed? %>
     <%# REVIEW MODE - Show results %>
-    <header class="attempt-header">
-      <h1><%= @quiz_attempt.quiz.title %> - Results</h1>
-      <div class="score-display <%= score_color(@quiz_attempt.score_percentage) %>">
-        <span class="score-big"><%= @quiz_attempt.score_percentage %>%</span>
-        <span class="score-detail"><%= @quiz_attempt.score %>/<%= @quiz_attempt.total_questions %> correct</span>
+    <header class="text-center mb-8">
+      <h1 class="m-0 mb-2 text-2xl font-bold"><%= @quiz_attempt.quiz.title %> - Results</h1>
+      <div class="mt-4 <%= score_color(@quiz_attempt.score_percentage) %>">
+        <span class="block text-5xl font-bold"><%= @quiz_attempt.score_percentage %>%</span>
+        <span class="block text-base opacity-80"><%= @quiz_attempt.score %>/<%= @quiz_attempt.total_questions %> correct</span>
       </div>
     </header>
 
-    <div class="questions-review">
+    <div class="flex flex-col gap-6">
       <% @questions.each_with_index do |question, index| %>
         <% user_answer = @user_answers[question.id] %>
-        <div class="question-card <%= user_answer&.correct? ? 'correct' : 'incorrect' %>">
-          <div class="question-header">
-            <span class="question-number">Question <%= index + 1 %></span>
-            <span class="topic-tag"><%= question.topic.titleize %></span>
-            <span class="result-badge"><%= user_answer&.correct? ? '✓ Correct' : '✗ Incorrect' %></span>
+        <div class="bg-white rounded-xl p-6 shadow <%= user_answer&.correct? ? 'border-l-4 border-green-500' : 'border-l-4 border-red-500' %>">
+          <div class="flex items-center gap-3 mb-4 flex-wrap">
+            <span class="font-semibold text-gray-500 text-sm">Question <%= index + 1 %></span>
+            <span class="bg-gray-100 text-gray-700 px-2.5 py-1 rounded-lg text-xs font-medium"><%= question.topic.titleize %></span>
+            <span class="ml-auto font-semibold text-sm <%= user_answer&.correct? ? 'text-green-500' : 'text-red-500' %>"><%= user_answer&.correct? ? '✓ Correct' : '✗ Incorrect' %></span>
           </div>
-          <p class="question-text"><%= question.content %></p>
+          <p class="text-lg font-medium m-0 mb-5 leading-relaxed"><%= question.content %></p>
           
-          <div class="answers-review">
+          <div class="answers-review flex flex-col gap-3">
             <% question.answers.each do |answer| %>
               <% is_selected = user_answer&.answer_id == answer.id %>
               <% is_correct = answer.correct? %>
               <div class="answer-option <%= 'selected' if is_selected %> <%= 'correct-answer' if is_correct %> <%= 'wrong-selected' if is_selected && !is_correct %>">
-                <span class="answer-indicator">
+                <span class="w-6 font-bold">
                   <% if is_correct %>✓<% elsif is_selected %>✗<% end %>
                 </span>
-                <span class="answer-text"><%= answer.content %></span>
+                <span class="flex-1"><%= answer.content %></span>
               </div>
             <% end %>
           </div>
@@ -38,34 +38,34 @@
       <% end %>
     </div>
 
-    <div class="attempt-actions">
-      <%= button_to "Try Again", quiz_quiz_attempts_path(@quiz_attempt.quiz), method: :post, class: "btn btn-primary" %>
-      <%= link_to "Back to Quizzes", quizzes_path, class: "btn btn-outline" %>
+    <div class="flex justify-center gap-4 mt-8">
+      <%= button_to "Try Again", quiz_quiz_attempts_path(@quiz_attempt.quiz), method: :post, class: "inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium rounded-lg bg-indigo-500 text-white hover:bg-indigo-600 transition-all cursor-pointer border-none" %>
+      <%= link_to "Back to Quizzes", quizzes_path, class: "inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium rounded-lg border border-gray-300 text-gray-700 bg-transparent hover:bg-gray-100 transition-all no-underline" %>
     </div>
 
   <% else %>
     <%# QUIZ MODE - Taking the quiz %>
-    <header class="attempt-header">
-      <h1><%= @quiz_attempt.quiz.title %></h1>
-      <p><%= @quiz_attempt.total_questions %> questions</p>
+    <header class="text-center mb-8">
+      <h1 class="m-0 mb-2 text-2xl font-bold"><%= @quiz_attempt.quiz.title %></h1>
+      <p class="text-gray-500"><%= @quiz_attempt.total_questions %> questions</p>
     </header>
 
-    <%= form_with url: submit_quiz_quiz_attempt_path(@quiz_attempt.quiz, @quiz_attempt), method: :post, class: "quiz-form" do |form| %>
-      <div class="questions-list">
+    <%= form_with url: submit_quiz_quiz_attempt_path(@quiz_attempt.quiz, @quiz_attempt), method: :post do |form| %>
+      <div class="flex flex-col gap-6">
         <% @questions.each_with_index do |question, index| %>
-          <div class="question-card">
-            <div class="question-header">
-              <span class="question-number">Question <%= index + 1 %> of <%= @questions.count %></span>
-              <span class="topic-tag"><%= question.topic.titleize %></span>
+          <div class="bg-white rounded-xl p-6 shadow">
+            <div class="flex items-center gap-3 mb-4 flex-wrap">
+              <span class="font-semibold text-gray-500 text-sm">Question <%= index + 1 %> of <%= @questions.count %></span>
+              <span class="bg-gray-100 text-gray-700 px-2.5 py-1 rounded-lg text-xs font-medium"><%= question.topic.titleize %></span>
               <%= difficulty_badge(question.difficulty) %>
             </div>
-            <p class="question-text"><%= question.content %></p>
+            <p class="text-lg font-medium m-0 mb-5 leading-relaxed"><%= question.content %></p>
             
-            <div class="answer-options">
+            <div class="flex flex-col gap-3">
               <% question.answers.shuffle.each do |answer| %>
                 <label class="answer-option">
-                  <%= radio_button_tag "answers[#{question.id}]", answer.id, false, class: "answer-radio" %>
-                  <span class="answer-text"><%= answer.content %></span>
+                  <%= radio_button_tag "answers[#{question.id}]", answer.id, false, class: "w-5 h-5 accent-indigo-500" %>
+                  <span class="flex-1"><%= answer.content %></span>
                 </label>
               <% end %>
             </div>
@@ -73,8 +73,8 @@
         <% end %>
       </div>
 
-      <div class="quiz-submit">
-        <%= form.submit "Submit Quiz", class: "btn btn-primary btn-lg" %>
+      <div class="mt-8 text-center">
+        <%= form.submit "Submit Quiz", class: "inline-flex items-center justify-center px-7 py-3.5 text-base font-medium rounded-lg bg-indigo-500 text-white hover:bg-indigo-600 transition-all cursor-pointer border-none" %>
       </div>
     <% end %>
   <% end %>

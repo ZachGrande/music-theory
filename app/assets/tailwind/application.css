@@ -1,1 +1,34 @@
 @import "tailwindcss";
+
+/* Custom component styles using Tailwind */
+@layer components {
+  /* Answer option states for quiz */
+  .answer-option {
+    @apply flex items-center gap-3 p-4 border-2 border-gray-200 rounded-lg cursor-pointer transition-all;
+  }
+  
+  .answer-option:hover {
+    @apply border-indigo-500 bg-indigo-500/5;
+  }
+  
+  .answer-option:has(.answer-radio:checked) {
+    @apply border-indigo-500 bg-indigo-500/10;
+  }
+  
+  /* Review mode answer states */
+  .answers-review .answer-option {
+    @apply cursor-default;
+  }
+  
+  .answers-review .answer-option:hover {
+    @apply border-gray-200 bg-transparent;
+  }
+  
+  .answers-review .correct-answer {
+    @apply border-green-500 bg-green-500/10;
+  }
+  
+  .answers-review .wrong-selected {
+    @apply border-red-500 bg-red-500/10;
+  }
+}

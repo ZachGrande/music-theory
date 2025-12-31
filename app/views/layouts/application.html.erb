@@ -20,35 +20,33 @@
 
     <%# Includes Tailwind CSS %>
     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <nav class="navbar">
-      <div class="container">
-        <%= link_to "🎵 Music Theory", root_path, class: "logo" %>
-        <div class="nav-links">
+  <body class="font-sans leading-relaxed text-gray-900 bg-gray-50">
+    <nav class="bg-white border-b border-gray-200 py-4 sticky top-0 z-50">
+      <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
+        <%= link_to "🎵 Music Theory", root_path, class: "text-xl font-bold text-gray-900 no-underline" %>
+        <div class="flex flex-wrap justify-center gap-6 items-center">
           <% if authenticated? %>
-            <%= link_to "Dashboard", dashboard_path %>
-            <%= link_to "Quizzes", quizzes_path %>
-            <%= link_to "My History", quiz_attempts_path %>
-            <%= button_to "Sign Out", session_path, method: :delete, class: "btn btn-outline" %>
+            <%= link_to "Dashboard", dashboard_path, class: "text-gray-700 no-underline font-medium hover:text-indigo-500 transition-colors" %>
+            <%= link_to "Quizzes", quizzes_path, class: "text-gray-700 no-underline font-medium hover:text-indigo-500 transition-colors" %>
+            <%= link_to "My History", quiz_attempts_path, class: "text-gray-700 no-underline font-medium hover:text-indigo-500 transition-colors" %>
+            <%= button_to "Sign Out", session_path, method: :delete, class: "inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium rounded-lg border border-gray-300 text-gray-700 bg-transparent hover:bg-gray-100 transition-all cursor-pointer" %>
           <% else %>
-            <%= link_to "Sign In", new_session_path, class: "btn btn-outline" %>
-            <%= link_to "Sign Up", new_registration_path, class: "btn btn-primary" %>
+            <%= link_to "Sign In", new_session_path, class: "inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium rounded-lg border border-gray-300 text-gray-700 bg-transparent hover:bg-gray-100 transition-all no-underline" %>
+            <%= link_to "Sign Up", new_registration_path, class: "inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium rounded-lg bg-indigo-500 text-white hover:bg-indigo-600 transition-all no-underline" %>
           <% end %>
         </div>
       </div>
     </nav>
 
-    <main class="container">
+    <main class="max-w-7xl mx-auto px-6 py-8">
       <% if notice.present? %>
-        <div class="alert alert-success"><%= notice %></div>
+        <div class="p-4 rounded-lg mb-6 bg-green-100 text-green-800 border border-green-200"><%= notice %></div>
       <% end %>
       <% if alert.present? %>
-        <div class="alert alert-error"><%= alert %></div>
+        <div class="p-4 rounded-lg mb-6 bg-red-100 text-red-800 border border-red-200"><%= alert %></div>
       <% end %>
 
       <%= yield %>

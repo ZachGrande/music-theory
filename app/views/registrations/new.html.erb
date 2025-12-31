@@ -1,14 +1,14 @@
 <% content_for(:title) { "Sign Up - Music Theory" } %>
 
-<div class="auth-container">
-  <div class="auth-card">
-    <h1>Create an Account</h1>
-    <p class="subtitle">Start your music theory journey today!</p>
+<div class="min-h-[70vh] flex items-center justify-center">
+  <div class="bg-white rounded-xl shadow-md p-10 w-full max-w-md">
+    <h1 class="m-0 mb-2 text-2xl font-bold">Create an Account</h1>
+    <p class="text-gray-500 m-0 mb-6">Start your music theory journey today!</p>
 
-    <%= form_with model: @user, url: registration_path, class: "auth-form" do |form| %>
+    <%= form_with model: @user, url: registration_path, class: "flex flex-col gap-4" do |form| %>
       <% if @user.errors.any? %>
-        <div class="alert alert-error">
-          <ul>
+        <div class="p-4 rounded-lg mb-2 bg-red-100 text-red-800 border border-red-200">
+          <ul class="m-0 pl-4">
             <% @user.errors.full_messages.each do |message| %>
               <li><%= message %></li>
             <% end %>
@@ -16,26 +16,26 @@
         </div>
       <% end %>
 
-      <div class="form-group">
-        <%= form.label :email_address, "Email" %>
-        <%= form.email_field :email_address, autofocus: true, autocomplete: "email", required: true, class: "form-input" %>
+      <div class="flex flex-col gap-1.5">
+        <%= form.label :email_address, "Email", class: "text-sm font-medium text-gray-700" %>
+        <%= form.email_field :email_address, autofocus: true, autocomplete: "email", required: true, class: "px-3.5 py-2.5 border border-gray-300 rounded-lg text-base transition-all focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10" %>
       </div>
 
-      <div class="form-group">
-        <%= form.label :password %>
-        <%= form.password_field :password, autocomplete: "new-password", required: true, class: "form-input" %>
+      <div class="flex flex-col gap-1.5">
+        <%= form.label :password, class: "text-sm font-medium text-gray-700" %>
+        <%= form.password_field :password, autocomplete: "new-password", required: true, class: "px-3.5 py-2.5 border border-gray-300 rounded-lg text-base transition-all focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10" %>
       </div>
 
-      <div class="form-group">
-        <%= form.label :password_confirmation, "Confirm Password" %>
-        <%= form.password_field :password_confirmation, autocomplete: "new-password", required: true, class: "form-input" %>
+      <div class="flex flex-col gap-1.5">
+        <%= form.label :password_confirmation, "Confirm Password", class: "text-sm font-medium text-gray-700" %>
+        <%= form.password_field :password_confirmation, autocomplete: "new-password", required: true, class: "px-3.5 py-2.5 border border-gray-300 rounded-lg text-base transition-all focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10" %>
       </div>
 
-      <%= form.submit "Create Account", class: "btn btn-primary btn-full" %>
+      <%= form.submit "Create Account", class: "w-full inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium rounded-lg bg-indigo-500 text-white hover:bg-indigo-600 transition-all cursor-pointer border-none" %>
     <% end %>
 
-    <p class="auth-footer">
-      Already have an account? <%= link_to "Sign in", new_session_path %>
+    <p class="mt-6 text-center text-gray-500 text-sm">
+      Already have an account? <%= link_to "Sign in", new_session_path, class: "text-indigo-500 no-underline font-medium" %>
     </p>
   </div>
 </div>

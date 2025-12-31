@@ -1,71 +1,71 @@
 <% content_for(:title) { "Dashboard - Music Theory" } %>
 
-<div class="dashboard">
-  <header class="dashboard-header">
-    <h1>Welcome back!</h1>
-    <p class="subtitle">Ready to test your music theory knowledge?</p>
+<div>
+  <header class="mb-8">
+    <h1 class="m-0 mb-2 text-3xl font-bold">Welcome back!</h1>
+    <p class="text-gray-500 m-0 text-lg">Ready to test your music theory knowledge?</p>
   </header>
 
-  <section class="stats-grid">
-    <div class="stat-card">
-      <span class="stat-value"><%= @stats[:total_quizzes] %></span>
-      <span class="stat-label">Quizzes Completed</span>
+  <section class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+    <div class="bg-white rounded-xl p-6 shadow flex flex-col gap-1">
+      <span class="text-3xl font-bold text-gray-900"><%= @stats[:total_quizzes] %></span>
+      <span class="text-sm text-gray-500">Quizzes Completed</span>
     </div>
-    <div class="stat-card">
-      <span class="stat-value"><%= @stats[:average_score] %>%</span>
-      <span class="stat-label">Average Score</span>
+    <div class="bg-white rounded-xl p-6 shadow flex flex-col gap-1">
+      <span class="text-3xl font-bold text-gray-900"><%= @stats[:average_score] %>%</span>
+      <span class="text-sm text-gray-500">Average Score</span>
     </div>
-    <div class="stat-card">
-      <span class="stat-value">🔥 <%= @stats[:current_streak] %></span>
-      <span class="stat-label">Current Streak</span>
+    <div class="bg-white rounded-xl p-6 shadow flex flex-col gap-1">
+      <span class="text-3xl font-bold text-gray-900">🔥 <%= @stats[:current_streak] %></span>
+      <span class="text-sm text-gray-500">Current Streak</span>
     </div>
-    <div class="stat-card">
-      <span class="stat-value">🏆 <%= @stats[:longest_streak] %></span>
-      <span class="stat-label">Longest Streak</span>
+    <div class="bg-white rounded-xl p-6 shadow flex flex-col gap-1">
+      <span class="text-3xl font-bold text-gray-900">🏆 <%= @stats[:longest_streak] %></span>
+      <span class="text-sm text-gray-500">Longest Streak</span>
     </div>
   </section>
 
-  <section class="dashboard-section">
-    <h2>Available Quizzes</h2>
+  <section class="mb-10">
+    <h2 class="m-0 mb-4 text-xl font-semibold">Available Quizzes</h2>
     <% if @quizzes.any? %>
-      <div class="quiz-grid">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <% @quizzes.each do |quiz| %>
-          <div class="quiz-card">
-            <div class="quiz-card-header">
-              <h3><%= quiz.title %></h3>
+          <div class="bg-white rounded-xl p-6 shadow">
+            <div class="flex justify-between items-start mb-3">
+              <h3 class="m-0 text-lg font-semibold"><%= quiz.title %></h3>
               <%= difficulty_badge(quiz.difficulty) %>
             </div>
-            <p><%= quiz.description %></p>
-            <div class="quiz-card-footer">
-              <span class="question-count"><%= quiz.question_count %> questions</span>
-              <%= link_to "Start Quiz", quiz_path(quiz), class: "btn btn-primary" %>
+            <p class="text-gray-500 text-sm m-0 mb-4"><%= quiz.description %></p>
+            <div class="flex justify-between items-center pt-4 border-t border-gray-100">
+              <span class="text-gray-500 text-sm"><%= quiz.question_count %> questions</span>
+              <%= link_to "Start Quiz", quiz_path(quiz), class: "inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium rounded-lg bg-indigo-500 text-white hover:bg-indigo-600 transition-all no-underline" %>
             </div>
           </div>
         <% end %>
       </div>
     <% else %>
-      <p class="empty-state">No quizzes available yet. Check back soon!</p>
+      <p class="text-center p-12 bg-white rounded-xl">No quizzes available yet. Check back soon!</p>
     <% end %>
   </section>
 
   <% if @recent_attempts.any? %>
-    <section class="dashboard-section">
-      <h2>Recent Activity</h2>
-      <div class="recent-attempts">
+    <section class="mb-10">
+      <h2 class="m-0 mb-4 text-xl font-semibold">Recent Activity</h2>
+      <div class="flex flex-col gap-3">
         <% @recent_attempts.each do |attempt| %>
-          <div class="attempt-row">
-            <div class="attempt-info">
-              <strong><%= attempt.quiz.title %></strong>
-              <span class="attempt-date"><%= attempt.completed_at.strftime("%b %d, %Y") %></span>
+          <div class="bg-white rounded-lg p-4 flex items-center gap-4 shadow">
+            <div class="flex-1">
+              <strong class="block mb-1"><%= attempt.quiz.title %></strong>
+              <span class="text-gray-500 text-xs"><%= attempt.completed_at.strftime("%b %d, %Y") %></span>
             </div>
-            <div class="attempt-score <%= score_color(attempt.score_percentage) %>">
+            <div class="font-semibold <%= score_color(attempt.score_percentage) %>">
               <%= attempt.score %>/<%= attempt.total_questions %> (<%= attempt.score_percentage %>%)
             </div>
-            <%= link_to "Review", quiz_quiz_attempt_path(attempt.quiz, attempt), class: "btn btn-outline btn-sm" %>
+            <%= link_to "Review", quiz_quiz_attempt_path(attempt.quiz, attempt), class: "inline-flex items-center justify-center px-3 py-1.5 text-xs font-medium rounded-lg border border-gray-300 text-gray-700 bg-transparent hover:bg-gray-100 transition-all no-underline" %>
           </div>
         <% end %>
       </div>
-      <%= link_to "View All History →", quiz_attempts_path, class: "link" %>
+      <%= link_to "View All History →", quiz_attempts_path, class: "text-indigo-500 no-underline font-medium inline-block mt-4" %>
     </section>
   <% end %>
 </div>
