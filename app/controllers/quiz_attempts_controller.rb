@@ -48,6 +48,8 @@ class QuizAttemptsController < ApplicationController
   end
 
   def answers_params
-    params.fetch(:answers, {}).permit!.to_h
+    # Only permit question IDs that belong to this quiz's questions
+    valid_question_ids = @quiz.question_ids.map(&:to_s)
+    params.fetch(:answers, {}).permit(*valid_question_ids).to_h
   end
 end
