@@ -46,6 +46,9 @@ group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", "~> 1.11", platforms: %i[ mri windows ], require: "debug/prelude"
 
+  # Testing framework
+  gem "minitest", "~> 5.27.0"
+
   # Audits gems for known security defects (use config/bundler-audit.yml to ignore issues)
   gem "bundler-audit", "~> 0.9", require: false
 
