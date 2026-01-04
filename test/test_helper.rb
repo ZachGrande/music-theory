@@ -11,6 +11,9 @@ module ActiveSupport
     # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
     fixtures :all
 
+    # Include FactoryBot methods
+    include FactoryBot::Syntax::Methods
+
     # Add more helper methods to be used by all tests here...
   end
 end
