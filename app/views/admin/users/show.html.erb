@@ -1,0 +1,128 @@
+<% content_for :title, "#{@user.email_address} - Admin - Music Theory" %>
+
+<div class="mb-8">
+  <%= link_to "← Back to Users", admin_users_path, class: "text-sm text-indigo-600 hover:text-indigo-800 font-medium no-underline" %>
+</div>
+
+<div class="bg-white rounded-xl shadow overflow-hidden mb-8">
+  <div class="px-6 py-5 border-b border-gray-200">
+    <div class="flex justify-between items-start">
+      <div>
+        <h1 class="text-2xl font-bold text-gray-900"><%= @user.email_address %></h1>
+        <div class="flex items-center gap-2 mt-1">
+          <span class="text-sm text-gray-500">Joined <%= @user.created_at.strftime("%B %d, %Y") %></span>
+          <% if @user.admin? %>
+            <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded-full bg-purple-100 text-purple-800">
+              Admin
+            </span>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- User Stats -->
+  <div class="grid grid-cols-2 md:grid-cols-4 divide-x divide-gray-200">
+    <div class="px-6 py-5">
+      <div class="text-sm font-medium text-gray-500 uppercase tracking-wide">Quizzes Completed</div>
+      <div class="text-2xl font-bold text-gray-900 mt-1"><%= @user.completed_quizzes_count %></div>
+    </div>
+    <div class="px-6 py-5">
+      <div class="text-sm font-medium text-gray-500 uppercase tracking-wide">Average Score</div>
+      <div class="text-2xl font-bold text-gray-900 mt-1">
+        <% if @user.completed_quizzes_count > 0 %>
+          <%= @user.average_score %>%
+        <% else %>
+          —
+        <% end %>
+      </div>
+    </div>
+    <div class="px-6 py-5">
+      <div class="text-sm font-medium text-gray-500 uppercase tracking-wide">Current Streak</div>
+      <div class="text-2xl font-bold text-gray-900 mt-1">
+        <% if @user.current_streak > 0 %>
+          🔥 <%= @user.current_streak %>
+        <% else %>
+          0
+        <% end %>
+      </div>
+    </div>
+    <div class="px-6 py-5">
+      <div class="text-sm font-medium text-gray-500 uppercase tracking-wide">Longest Streak</div>
+      <div class="text-2xl font-bold text-gray-900 mt-1"><%= @user.longest_streak %></div>
+    </div>
+  </div>
+</div>
+
+<!-- Quiz Attempt History -->
+<div class="bg-white rounded-xl shadow overflow-hidden">
+  <div class="px-6 py-4 border-b border-gray-200">
+    <h2 class="text-lg font-semibold text-gray-900">Quiz Attempt History</h2>
+  </div>
+
+  <% if @quiz_attempts.any? %>
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead class="bg-gray-50">
+        <tr>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Quiz
+          </th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Score
+          </th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Status
+          </th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Date
+          </th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200">
+        <% @quiz_attempts.each do |attempt| %>
+          <tr class="hover:bg-gray-50">
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="text-sm font-medium text-gray-900"><%= attempt.quiz.title %></div>
+              <div class="text-xs text-gray-500"><%= attempt.quiz.category %></div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <% if attempt.completed_at %>
+                <span class="inline-block px-2.5 py-1 text-xs font-semibold rounded-full <%= score_color_class(attempt.score_percentage) %>">
+                  <%= attempt.score_percentage %>%
+                </span>
+                <span class="text-sm text-gray-500 ml-2">
+                  (<%= attempt.correct_answers_count %>/<%= attempt.quiz.question_count %>)
+                </span>
+              <% else %>
+                <span class="text-sm text-gray-400">—</span>
+              <% end %>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <% if attempt.completed_at %>
+                <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                  Completed
+                </span>
+              <% else %>
+                <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                  In Progress
+                </span>
+              <% end %>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              <%= attempt.created_at.strftime("%b %d, %Y at %l:%M %p") %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div class="px-6 py-4 border-t border-gray-200">
+      <%== pagy_nav(@pagy) %>
+    </div>
+  <% else %>
+    <div class="px-6 py-12 text-center text-gray-500">
+      This user has not attempted any quizzes yet.
+    </div>
+  <% end %>
+</div>

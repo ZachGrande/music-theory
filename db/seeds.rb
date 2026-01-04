@@ -2,6 +2,11 @@
 # development, test). The code here should be idempotent so that it can be executed at any point in every environment.
 # The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
 
+# To create an admin user, use the Rails console:
+#   User.find_by(email_address: "user@example.com").update!(admin: true)
+# Or create a new admin:
+#   User.create!(email_address: "admin@example.com", password: "password", admin: true)
+
 require "yaml"
 
 # Capture base time once - all timestamps are relative to this

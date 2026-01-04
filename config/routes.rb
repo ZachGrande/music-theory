@@ -3,6 +3,13 @@ Rails.application.routes.draw do
   resources :passwords, param: :token
   resource :registration, only: %i[new create]
 
+  # Admin namespace
+  namespace :admin do
+    root "dashboard#show"
+    resources :users, only: %i[index show]
+    resources :quiz_attempts, only: %i[index]
+  end
+
   # Dashboard
   get "dashboard", to: "dashboard#show"
 

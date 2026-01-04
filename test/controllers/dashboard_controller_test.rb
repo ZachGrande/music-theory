@@ -65,4 +65,41 @@ class DashboardControllerTest < ActionDispatch::IntegrationTest
     get dashboard_path
     assert_response :success
   end
+
+  test "shows admin link for admin users" do
+    admin = create(:user, :admin)
+    sign_in_as(admin)
+
+    get dashboard_path
+    assert_response :success
+    assert_select "a", text: "Admin"
+  end
+
+  test "does not show admin link for regular users" do
+    sign_in_as(@user)
+
+    get dashboard_path
+    assert_response :success
+    assert_select "a", text: "Admin", count: 0
+  end
+
+  test "shows empty state when user has no completed quizzes" do
+    sign_in_as(@user)
+    quiz = create(:quiz)
+    # Only in-progress attempt
+    create(:quiz_attempt, user: @user, quiz: quiz, completed_at: nil)
+
+    get dashboard_path
+    assert_response :success
+  end
+
+  test "shows empty state when no quizzes exist" do
+    sign_in_as(@user)
+    # Destroy all quizzes to test empty state
+    Quiz.destroy_all
+
+    get dashboard_path
+    assert_response :success
+    assert_match /No quizzes available yet/, response.body
+  end
 end
