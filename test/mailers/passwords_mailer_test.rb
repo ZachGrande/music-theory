@@ -9,8 +9,8 @@ class PasswordsMailerTest < ActionMailer::TestCase
       email.deliver_now
     end
 
-    assert_equal ["from@example.com"], email.from
-    assert_equal [user.email_address], email.to
+    assert_equal [ "from@example.com" ], email.from
+    assert_equal [ user.email_address ], email.to
     assert_equal "Reset your password", email.subject
   end
 end
