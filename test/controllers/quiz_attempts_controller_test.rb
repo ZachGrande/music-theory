@@ -109,4 +109,20 @@ class QuizAttemptsControllerTest < ActionDispatch::IntegrationTest
     # No user answer should be created for blank answer_id
     assert_equal 0, quiz_attempt.user_answers.count
   end
+
+  test "index shows in-progress quiz attempts" do
+    # Create an in-progress attempt (no completed_at)
+    @user.quiz_attempts.create!(quiz: @quiz, completed_at: nil)
+
+    get quiz_attempts_path
+    assert_response :success
+  end
+
+  test "index shows empty state when no quiz attempts" do
+    # Delete any existing attempts
+    @user.quiz_attempts.destroy_all
+
+    get quiz_attempts_path
+    assert_response :success
+  end
 end

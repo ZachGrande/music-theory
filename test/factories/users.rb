@@ -7,6 +7,10 @@ FactoryBot.define do
     longest_streak { 0 }
     last_quiz_date { nil }
 
+    trait :admin do
+      admin { true }
+    end
+
     trait :with_streak do
       current_streak { 5 }
       longest_streak { 10 }

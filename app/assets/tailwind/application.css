@@ -31,4 +31,29 @@
   .answers-review .wrong-selected {
     @apply border-red-500 bg-red-500/10;
   }
+
+  /* Pagy pagination styles */
+  .pagy.series-nav {
+    @apply flex items-center justify-center gap-1;
+  }
+
+  .pagy.series-nav a {
+    @apply inline-flex items-center justify-center min-w-[2.5rem] h-10 px-3 text-sm font-medium rounded-lg transition-all no-underline;
+  }
+
+  .pagy.series-nav a:not([aria-disabled="true"]) {
+    @apply text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 hover:border-gray-400 cursor-pointer;
+  }
+
+  .pagy.series-nav a[aria-current="page"] {
+    @apply bg-indigo-500 text-white border-indigo-500;
+  }
+
+  .pagy.series-nav a[aria-disabled="true"]:not([aria-current="page"]) {
+    @apply text-gray-400 bg-gray-100 border border-gray-200 cursor-not-allowed;
+  }
+
+  .pagy.series-nav a[role="separator"] {
+    @apply border-none bg-transparent text-gray-500;
+  }
 }
