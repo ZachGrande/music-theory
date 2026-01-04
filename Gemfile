@@ -49,6 +49,9 @@ group :development, :test do
   # Testing framework
   gem "minitest", "~> 5.27.0"
 
+  # Factory Bot for test data
+  gem "factory_bot_rails", "~> 6.5"
+
   # Audits gems for known security defects (use config/bundler-audit.yml to ignore issues)
   gem "bundler-audit", "~> 0.9", require: false
 
@@ -70,4 +73,5 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara", "~> 3.40"
   gem "selenium-webdriver", "~> 4.39"
+  gem "simplecov", "~> 0.22", require: false
 end

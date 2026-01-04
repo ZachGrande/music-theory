@@ -87,4 +87,26 @@ class QuizAttemptsControllerTest < ActionDispatch::IntegrationTest
     # Should redirect successfully after filtering invalid keys
     assert_redirected_to quiz_quiz_attempt_path(@quiz, quiz_attempt)
   end
+
+  # Test accessing quiz attempt via /my-quizzes/:id route (without quiz_id)
+  test "show via my-quizzes route displays quiz attempt details" do
+    quiz_attempt = @user.quiz_attempts.create!(quiz: @quiz, completed_at: Time.current, score: 1)
+    get quiz_attempt_path(quiz_attempt)
+    assert_response :success
+  end
+
+  # Test submitting with blank answer_id (exercises the `next if answer_id.blank?` branch)
+  test "submit skips blank answer_ids" do
+    quiz_attempt = @user.quiz_attempts.create!(quiz: @quiz)
+
+    post submit_quiz_quiz_attempt_path(@quiz, quiz_attempt), params: {
+      answers: {
+        @question.id.to_s => ""  # Blank answer should be skipped
+      }
+    }
+
+    assert_redirected_to quiz_quiz_attempt_path(@quiz, quiz_attempt)
+    # No user answer should be created for blank answer_id
+    assert_equal 0, quiz_attempt.user_answers.count
+  end
 end
