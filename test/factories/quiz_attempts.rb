@@ -30,9 +30,9 @@ FactoryBot.define do
         quiz.questions.reload.each_with_index do |question, index|
           answer = if index < evaluator.correct_count
                      question.answers.find_by(correct: true) || create(:answer, :correct, question: question)
-                   else
+          else
                      question.answers.find_by(correct: false) || create(:answer, question: question)
-                   end
+          end
           create(:user_answer, quiz_attempt: attempt, question: question, answer: answer)
         end
       end
