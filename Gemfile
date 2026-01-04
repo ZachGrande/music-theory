@@ -49,6 +49,9 @@ group :development, :test do
   # Testing framework
   gem "minitest", "~> 5.27.0"
 
+  # Factory Bot for test data
+  gem "factory_bot_rails", "~> 6.5"
+
   # Audits gems for known security defects (use config/bundler-audit.yml to ignore issues)
   gem "bundler-audit", "~> 0.9", require: false
 
