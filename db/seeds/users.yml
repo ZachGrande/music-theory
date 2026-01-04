@@ -1,0 +1,119 @@
+users:
+  - email: maestro@example.com
+    password: password123
+    profile:
+      type: power_user_lapsed
+      description: Former power user who hasn't played in 5 days
+      accuracy: 0.90
+      longest_streak: 35
+      # Played daily for 35 days, then stopped 5 days ago
+      streak_history:
+        - days_ago: 5
+          attempts: 2
+        - days_ago: 6
+          attempts: 1
+        - days_ago: 7
+          attempts: 2
+        - days_ago: 8
+          attempts: 1
+        - days_ago: 9
+          attempts: 1
+        - days_ago: 10
+          attempts: 1
+
+  - email: pianist@example.com
+    password: password123
+    profile:
+      type: active_long_streak
+      description: Dedicated user with a 10-day active streak
+      accuracy: 0.80
+      # Playing daily for the last 10 days (including today)
+      streak_history:
+        - days_ago: 0
+          attempts: 1
+        - days_ago: 1
+          attempts: 1
+        - days_ago: 2
+          attempts: 1
+        - days_ago: 3
+          attempts: 1
+        - days_ago: 4
+          attempts: 1
+        - days_ago: 5
+          attempts: 1
+        - days_ago: 6
+          attempts: 1
+        - days_ago: 7
+          attempts: 1
+        - days_ago: 8
+          attempts: 1
+        - days_ago: 9
+          attempts: 1
+
+  - email: drummer@example.com
+    password: password123
+    profile:
+      type: active_short_streak
+      description: User building a 3-day streak
+      accuracy: 0.70
+      streak_history:
+        - days_ago: 0
+          attempts: 1
+        - days_ago: 1
+          attempts: 1
+        - days_ago: 2
+          attempts: 1
+
+  - email: guitarist@example.com
+    password: password123
+    profile:
+      type: broken_streak
+      description: Had a 5-day streak but lapsed 4 days ago
+      accuracy: 0.75
+      streak_history:
+        - days_ago: 4
+          attempts: 1
+        - days_ago: 5
+          attempts: 1
+        - days_ago: 6
+          attempts: 1
+        - days_ago: 7
+          attempts: 1
+        - days_ago: 8
+          attempts: 1
+
+  - email: vocalist@example.com
+    password: password123
+    profile:
+      type: first_timer
+      description: Just completed their first quiz today
+      accuracy: 0.60
+      streak_history:
+        - days_ago: 0
+          attempts: 1
+
+  - email: conductor@example.com
+    password: password123
+    profile:
+      type: casual
+      description: Sporadic player with non-consecutive attempts
+      accuracy: 0.65
+      streak_history:
+        - days_ago: 1
+          attempts: 1
+        - days_ago: 4
+          attempts: 1
+        - days_ago: 8
+          attempts: 1
+        - days_ago: 15
+          attempts: 1
+        - days_ago: 20
+          attempts: 1
+
+  - email: newbie@example.com
+    password: password123
+    profile:
+      type: inactive
+      description: Registered but never taken a quiz
+      accuracy: 0.50
+      streak_history: []
