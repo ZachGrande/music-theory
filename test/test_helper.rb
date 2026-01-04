@@ -7,6 +7,8 @@ SimpleCov.start "rails" do
   add_filter "/config/"
   add_filter "/db/"
   add_filter "/vendor/"
+  # Exclude boilerplate files with no custom logic
+  add_filter "app/jobs/application_job.rb"
 end
 
 require_relative "../config/environment"
