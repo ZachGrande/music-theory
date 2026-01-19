@@ -52,7 +52,7 @@ class SqlVisualizer
     # Calculate column widths
     col_widths = headers.map.with_index do |header, i|
       max_row_width = rows.map { |row| row[i].to_s.length }.max || 0
-      [header.length, max_row_width].max + 2
+      [ header.length, max_row_width ].max + 2
     end
 
     # Print top border
@@ -77,9 +77,9 @@ class SqlVisualizer
 
   def self.print_join_visualization(quiz_attempt)
     print_section("JOIN VISUALIZATION")
-    
+
     puts "#{COLORS[:magenta]}This query joins multiple tables to get quiz attempt details:#{COLORS[:reset]}\n\n"
-    
+
     puts "  ┌──────────────┐"
     puts "  │ quiz_attempts│"
     puts "  └──────┬───────┘"
@@ -194,10 +194,10 @@ ActiveRecord::Base.logger.level = Logger::WARN
 SqlVisualizer.print_section("Questions Created")
 questions_data = quiz.questions.includes(:answers).map do |q|
   correct_answer = q.answers.find_by(correct: true)
-  [q.id, q.content[0..40] + "...", q.topic, correct_answer.content]
+  [ q.id, q.content[0..40] + "...", q.topic, correct_answer.content ]
 end
 SqlVisualizer.print_table(
-  ["ID", "Question", "Topic", "Correct Answer"],
+  [ "ID", "Question", "Topic", "Correct Answer" ],
   questions_data
 )
 
@@ -274,7 +274,7 @@ ActiveRecord::Base.logger.level = Logger::DEBUG
 
 # Eager load all associations to show the queries
 result = QuizAttempt
-  .includes(user_answers: [:question, :answer])
+  .includes(user_answers: [ :question, :answer ])
   .find(quiz_attempt.id)
 
 ActiveRecord::Base.logger.level = Logger::WARN
@@ -291,7 +291,7 @@ results_data = result.user_answers.map do |user_answer|
 end
 
 SqlVisualizer.print_table(
-  ["Question", "User's Answer", "Result"],
+  [ "Question", "User's Answer", "Result" ],
   results_data
 )
 
@@ -299,16 +299,16 @@ SqlVisualizer.print_table(
 SqlVisualizer.print_header("SUMMARY")
 
 summary_data = [
-  ["User", user.email_address],
-  ["Quiz", quiz.title],
-  ["Total Questions", quiz.questions.count],
-  ["Correct Answers", correct_count],
-  ["Score", "#{quiz_attempt.score_percentage}%"],
-  ["Status", quiz_attempt.completed? ? "Completed ✓" : "In Progress"]
+  [ "User", user.email_address ],
+  [ "Quiz", quiz.title ],
+  [ "Total Questions", quiz.questions.count ],
+  [ "Correct Answers", correct_count ],
+  [ "Score", "#{quiz_attempt.score_percentage}%" ],
+  [ "Status", quiz_attempt.completed? ? "Completed ✓" : "In Progress" ]
 ]
 
 SqlVisualizer.print_table(
-  ["Metric", "Value"],
+  [ "Metric", "Value" ],
   summary_data
 )
 
