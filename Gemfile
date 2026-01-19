@@ -50,7 +50,7 @@ group :development, :test do
   gem "debug", "~> 1.11", platforms: %i[ mri windows ], require: "debug/prelude"
 
   # Testing framework
-  gem "minitest", "~> 5.27.0"
+  gem "minitest", "~> 6.0.1"
 
   # Factory Bot for test data
   gem "factory_bot_rails", "~> 6.5"
