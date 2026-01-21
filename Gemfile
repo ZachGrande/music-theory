@@ -75,6 +75,6 @@ end
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara", "~> 3.40"
-  gem "selenium-webdriver", "~> 4.39"
+  gem "selenium-webdriver", "~> 4.40"
   gem "simplecov", "~> 0.22", require: false
 end
