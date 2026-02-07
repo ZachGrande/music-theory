@@ -7,7 +7,7 @@ gem "propshaft", "~> 1.3"
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.6"
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", "~> 7.1.0"
+gem "puma", "~> 7.2.0"
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails", "~> 2.2"
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
@@ -27,11 +27,11 @@ gem "tzinfo-data", "~> 2.0", platforms: %i[ windows jruby ]
 
 # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
 gem "solid_cache", "~> 1.0"
-gem "solid_queue", "~> 1.2"
+gem "solid_queue", "~> 1.3"
 gem "solid_cable", "~> 3.0"
 
 # Reduces boot times through caching; required in config/boot.rb
-gem "bootsnap", "~> 1.21", require: false
+gem "bootsnap", "~> 1.22", require: false
 
 # Deploy this application anywhere as a Docker container [https://kamal-deploy.org]
 gem "kamal", "~> 2.10", require: false
@@ -75,6 +75,6 @@ end
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara", "~> 3.40"
-  gem "selenium-webdriver", "~> 4.39"
+  gem "selenium-webdriver", "~> 4.40"
   gem "simplecov", "~> 0.22", require: false
 end
