@@ -3,6 +3,9 @@ Rails.application.routes.draw do
   resources :passwords, param: :token
   resource :registration, only: %i[new create]
 
+  # Public landing page
+  root "pages#home"
+
   # Admin namespace
   namespace :admin do
     root "dashboard#show"
@@ -10,7 +13,7 @@ Rails.application.routes.draw do
     resources :quiz_attempts, only: %i[index]
   end
 
-  # Dashboard
+  # Dashboard (authenticated users)
   get "dashboard", to: "dashboard#show"
 
   # Quizzes
@@ -32,7 +35,4 @@ Rails.application.routes.draw do
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
-
-  # Defines the root path route ("/")
-  root "dashboard#show"
 end
