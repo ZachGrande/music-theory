@@ -31,7 +31,7 @@ gem "solid_queue", "~> 1.3"
 gem "solid_cable", "~> 3.0"
 
 # Reduces boot times through caching; required in config/boot.rb
-gem "bootsnap", "~> 1.22", require: false
+gem "bootsnap", "~> 1.23", require: false
 
 # Deploy this application anywhere as a Docker container [https://kamal-deploy.org]
 gem "kamal", "~> 2.10", require: false
@@ -43,14 +43,14 @@ gem "thruster", "~> 0.1", require: false
 gem "image_processing", "~> 1.14"
 
 # Pagination [https://github.com/ddnexus/pagy]
-gem "pagy", "~> 43.2"
+gem "pagy", "~> 43.3"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", "~> 1.11", platforms: %i[ mri windows ], require: "debug/prelude"
 
   # Testing framework
-  gem "minitest", "~> 6.0.1"
+  gem "minitest", "~> 6.0.2"
 
   # Factory Bot for test data
   gem "factory_bot_rails", "~> 6.5"
@@ -67,7 +67,7 @@ end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
-  gem "web-console", "~> 4.2"
+  gem "web-console", "~> 4.3"
   # Run bin/dev
   gem "foreman", "~> 0.90"
 end
@@ -75,6 +75,6 @@ end
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara", "~> 3.40"
-  gem "selenium-webdriver", "~> 4.40"
+  gem "selenium-webdriver", "~> 4.41"
   gem "simplecov", "~> 0.22", require: false
 end
