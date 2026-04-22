@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 8.1.2"
+gem "rails", "~> 8.1.3"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem "propshaft", "~> 1.3"
 # Use postgresql as the database for Active Record
@@ -27,14 +27,14 @@ gem "tzinfo-data", "~> 2.0", platforms: %i[ windows jruby ]
 
 # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
 gem "solid_cache", "~> 1.0"
-gem "solid_queue", "~> 1.3"
+gem "solid_queue", "~> 1.4"
 gem "solid_cable", "~> 3.0"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", "~> 1.23", require: false
 
 # Deploy this application anywhere as a Docker container [https://kamal-deploy.org]
-gem "kamal", "~> 2.10", require: false
+gem "kamal", "~> 2.11", require: false
 
 # Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
 gem "thruster", "~> 0.1", require: false
@@ -43,14 +43,14 @@ gem "thruster", "~> 0.1", require: false
 gem "image_processing", "~> 1.14"
 
 # Pagination [https://github.com/ddnexus/pagy]
-gem "pagy", "~> 43.3"
+gem "pagy", "~> 43.5"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", "~> 1.11", platforms: %i[ mri windows ], require: "debug/prelude"
 
   # Testing framework
-  gem "minitest", "~> 6.0.2"
+  gem "minitest", "~> 6.0.5"
 
   # Factory Bot for test data
   gem "factory_bot_rails", "~> 6.5"
@@ -75,6 +75,6 @@ end
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara", "~> 3.40"
-  gem "selenium-webdriver", "~> 4.41"
+  gem "selenium-webdriver", "~> 4.43"
   gem "simplecov", "~> 0.22", require: false
 end
